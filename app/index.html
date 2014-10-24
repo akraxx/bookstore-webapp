@@ -9,13 +9,14 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/ng-table/ng-table.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="bookstoreWebapp">
+  <body ng-app="bookstoreWebapp" ng-controller="PageCtrl">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -23,15 +24,16 @@
     <!-- Add your site or application content here -->
     <div class="container">
       <div class="header">
+
         <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#">About</a></li>
+          <li ng-class="{active:isActive('/')}"><a ng-href="/#!/">Home</a></li>
+          <li ng-class="{active:isActive('/books')}"><a ng-href="/#!/books">Books</a></li>
           <li><a ng-href="#">Contact</a></li>
         </ul>
         <h3 class="text-muted">bookstoreWebapp</h3>
       </div>
 
-      <div ng-include="'views/main.html'" ng-controller="MainCtrl"></div>
+      <div ng-view></div>
 
       <div class="footer">
         <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
@@ -66,12 +68,17 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/ng-table/ng-table.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/factories/book.js"></script>
         <!-- endbuild -->
 </body>
 </html>
