@@ -10,6 +10,7 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/ng-table/ng-table.css" />
+    <link rel="stylesheet" href="bower_components/angularjs-toaster/toaster.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -17,6 +18,7 @@
     <!-- endbuild -->
   </head>
   <body ng-app="bookstoreWebapp" ng-controller="PageCtrl">
+  <toaster-container toaster-options="{'time-out': 0, 'close-button':true}"></toaster-container>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -26,9 +28,12 @@
       <div class="header">
 
         <ul class="nav nav-pills pull-right">
-          <li ng-class="{active:isActive('/')}"><a ng-href="/#!/">Home</a></li>
-          <li ng-class="{active:isActive('/books')}"><a ng-href="/#!/books">Books</a></li>
-          <li><a ng-href="#">Contact</a></li>
+            <li ng-class="{active:isActive('/')}"><a ng-href="/#!/">Home</a></li>
+            <li ng-class="{active:isActive('/books')}"><a ng-href="/#!/books">Books</a></li>
+            <li><a ng-href="#">Contact</a></li>
+            <li ng-class="{active:isActive('/login')}"><a ng-if="!loggedIn()" ng-href="/#!/login">Login</a></li>
+            <li ng-class="{active:isActive('/register')}"><a ng-if="!loggedIn()" ng-href="/#!/register">Register</a></li>
+            <li><a ng-if="loggedIn()" ng-href="/#!/" ng-click="logout()">Logout</a></li>
         </ul>
         <h3 class="text-muted">bookstoreWebapp</h3>
       </div>
@@ -72,13 +77,18 @@
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/ng-table/ng-table.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angularjs-toaster/toaster.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/book.js"></script>
+        <script src="scripts/controllers/authentification.js"></script>
+        <script src="scripts/controllers/register.js"></script>
         <script src="scripts/factories/book.js"></script>
+        <script src="scripts/factories/author.js"></script>
         <!-- endbuild -->
 </body>
 </html>

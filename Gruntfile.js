@@ -21,6 +21,10 @@ module.exports = function (grunt) {
     dist: 'dist'
   };
 
+  grunt.loadNpmTasks('grunt-connect-proxy');
+
+    var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -65,27 +69,34 @@ module.exports = function (grunt) {
 
     // The actual grunt server settings
     connect: {
-      options: {
-        port: 9000,
-        // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
-        livereload: 35729
-      },
-      livereload: {
         options: {
-          open: true,
-          middleware: function (connect) {
-            return [
-              connect.static('.tmp'),
-              connect().use(
-                '/bower_components',
-                connect.static('./bower_components')
-              ),
-              connect.static(appConfig.app)
-            ];
-          }
-        }
-      },
+            port: 9000,
+            hostname: 'localhost'
+        },
+        proxies: [
+            {
+                context: '/api',
+                host: 'localhost',
+                port: 9090
+            }
+        ],
+        livereload: {
+            options: {
+                open: true,
+                middleware: function (connect) {
+                    return [
+                        proxySnippet,
+                        connect.static('.tmp'),
+                        connect().use(
+                            '/bower_components',
+                            connect.static('./bower_components')
+                        ),
+                        connect.static(appConfig.app)
+                    ];
+                }
+            }
+
+        },
       test: {
         options: {
           port: 9001,
@@ -261,7 +272,7 @@ module.exports = function (grunt) {
         options: {
           collapseWhitespace: true,
           conservativeCollapse: true,
-          collapseBooleanAttributes: true,
+          collapseBooleanAttributes: false,
           removeCommentsFromCDATA: true,
           removeOptionalTags: true
         },
@@ -364,6 +375,7 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
+        'configureProxies:server',
       'autoprefixer',
       'connect:livereload',
       'watch'

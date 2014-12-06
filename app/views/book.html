@@ -1,5 +1,3 @@
-
-
 <div class="row marketing">
     <h4>Books</h4>
 
@@ -17,7 +15,7 @@
             <td data-title="'Editor'" filter="{ 'editor': 'text' }" sortable="'editor'">
                 {{book.editor}}
             </td>
-            <td data-title="'Author'" filter="{ 'lastName': 'text' }" sortable="'lastName'">
+            <td data-title="'Author'">
                 {{book.author.lastName + " " + book.author.firstName}}
             </td>
             <td>
@@ -46,7 +44,7 @@
                             <b>Editor :</b>
                         </div>
                         <div class="col-lg-8">
-                            <b>{{ book.editor }}</b>
+                            <b>{{ book.editor }} !    </b>
                         </div>
                     </div>
                 </div>
