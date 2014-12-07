@@ -8,6 +8,10 @@ angular.module('bookstoreWebapp')
         books.$promise.then(function(books) {
             angular.forEach(books, function(book) {
                 book.author = AuthorFactory.get({authorId:book.authorId});
+
+                book.author.$promise.then(function(author) {
+                    book.author.fullName = author.lastName + ' ' + author.firstName;
+                });
             });
         });
 
@@ -27,12 +31,18 @@ angular.module('bookstoreWebapp')
         $scope.tableParams = new NgTableParams({
             page: 1,            // show first page
             count: 5,          // count per page
+            filterDelay: 0,
             filter: {
-                isbn13: ''       // initial filter
+                isbn13: ''
+            },
+            sorting: {
+                isbn13: 'asc'
             }
         }, {
             total: books.length, // length of data
+            filterDelay: 300,
             getData: function($defer, params) {
+
                 // use build-in angular filter
                 var orderedData = params.filter() ?
                     $filter('filter')(books, params.filter()) :
@@ -42,6 +52,10 @@ angular.module('bookstoreWebapp')
                     $filter('orderBy')(orderedData, params.orderBy()) :
                     orderedData;
 
+                if($scope.tableParams.operatorPrice && $scope.tableParams.limitPrice){
+                    orderedData = $filter('price')(orderedData, $scope.tableParams.operatorPrice, $scope.tableParams.limitPrice);
+                }
+
                 $scope.books = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
 
                 params.total(orderedData.length); // set total for recalc pagination
@@ -49,6 +63,12 @@ angular.module('bookstoreWebapp')
             }
         });
 
+        $scope.reassessUnitPriceFilter = function(){
+            $scope.tableParams.reload();
+        };
+
+        $scope.tableParams.operatorPrice = '>';
+        $scope.tableParams.limitPrice = 30;
 
     })
     .controller('DetailsBookCtrl', function ($scope, $modalInstance, book) {
@@ -56,5 +76,22 @@ angular.module('bookstoreWebapp')
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
+        };
+    })
+    .filter('price', function () {
+        return function(books, operator, price)
+        {
+            var result = [];
+            angular.forEach(books, function (book)
+            {
+                if(operator === '>' && book.unitPrice > price) {
+                    result.push(book);
+                } else if(operator === '<' && book.unitPrice < price) {
+                    result.push(book);
+                } else if (operator === '=' && book.unitPrice === Number(price)) {
+                    result.push(book);
+                }
+            });
+            return result;
         };
     });

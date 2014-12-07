@@ -93,7 +93,7 @@ angular
             $scope.pageLoaded = true;
         });
     })
-    .provider('FooService', function(){
+    .provider('SecureService', function(){
         this.filter = function(SessionService, $q, $location, toaster, page) {
             if (SessionService.isAnonymous() === false) { // fire $routeChangeSuccess
                 var deferred = $q.defer();
@@ -110,26 +110,10 @@ angular
 
         };
     })
-    .config(function($routeProvider, $locationProvider, $httpProvider, FooServiceProvider) {
+    .config(function($routeProvider, $locationProvider, $httpProvider, SecureServiceProvider) {
         $locationProvider.hashPrefix('!');
 
         $httpProvider.interceptors.push('httpRequestInterceptor');
-
-//        var requireAuthentication = function (page) {
-//            return {
-//                load: function (SessionService, $q, $location, toaster) {
-//                    if (SessionService.isAnonymous() === false) { // fire $routeChangeSuccess
-//                        var deferred = $q.defer();
-//                        deferred.resolve();
-//                        return deferred.promise;
-//                    } else { // fire $routeChangeError
-//                        toaster.pop('warning', 'Authentification', 'You need to be authenticated to access to the page ' + page, 0);
-//                        SessionService.needAuthentification(page);
-//                        $location.path('/login');
-//                    }
-//                }
-//            };
-//        };
 
         $routeProvider
             .when('/', {
@@ -141,7 +125,7 @@ angular
                 templateUrl:'../views/book.html',
                 resolve: {
                     load: function (SessionService, $q, $location, toaster) {
-                        FooServiceProvider.filter(SessionService, $q, $location, toaster, '/books');
+                        SecureServiceProvider.filter(SessionService, $q, $location, toaster, '/books');
                     }
                 }
             })

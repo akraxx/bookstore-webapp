@@ -9,20 +9,37 @@
             <td data-title="'Title'" filter="{ 'title': 'text' }" sortable="'title'">
                 {{book.title}}
             </td>
-            <td data-title="'Unit Price'">
+            <td data-title="'Unit Price'" filter="{ 'unitPrice': 'unitPrice' }" sortable="'unitPrice'">
                 {{book.unitPrice}}
             </td>
             <td data-title="'Editor'" filter="{ 'editor': 'text' }" sortable="'editor'">
                 {{book.editor}}
             </td>
-            <td data-title="'Author'">
-                {{book.author.lastName + " " + book.author.firstName}}
+            <td data-title="'Author'" filter="{ 'author': 'text' }" sortable="'author.fullName'">
+                {{book.author.fullName}}
             </td>
             <td>
                 <button class="btn btn-default" ng-click="openDetails(book, 'lg')">More</button>
             </td>
         </tr>
     </table>
+
+    <script type="text/ng-template" id="ng-table/filters/unitPrice.html">
+
+        <div class="row">
+            <div class="col-lg-5">
+                <select name="filter-unitPrice" class="form-control" ng-model="params.operatorPrice" ng-change="reassessUnitPriceFilter()">
+                    <option value=""></option>
+                    <option value=">">></option>
+                    <option value="<"><</option>
+                    <option value="=">=</option>
+                </select>
+            </div>
+            <div class="col-lg-7">
+                <input type="text" name="{{column.filterName}}" ng-model="params.limitPrice" class="input-filter form-control" ng-change="reassessUnitPriceFilter()" />
+            </div>
+        </div>
+    </script>
 
     <script type="text/ng-template" id="modalBookDetails.html">
         <div class="modal-header">
@@ -44,7 +61,7 @@
                             <b>Editor :</b>
                         </div>
                         <div class="col-lg-8">
-                            <b>{{ book.editor }} !    </b>
+                            <b>{{ book.editor }}</b>
                         </div>
                     </div>
                 </div>
