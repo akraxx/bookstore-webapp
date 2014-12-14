@@ -16,15 +16,21 @@
       <label for="repeat-email">Repeat email</label>
       <input type="email" required="required" ng-model="emailRepeat" class="form-control" id="repeat-email"
              placeholder="Enter your email again" ng-keyup="checkEmail()">
-      <span ng-bind="errorMailRepeat" ng-show="isErrorMailRepeat" style="color: red;"></span>
+      <span ng-show="isErrorMailRepeat" style="color: red;">E-Mails are not equals.</span>
     </div>
     <div class="form-group">
       <label for="password">Password</label>
       <input type="password" required="required" ng-model="password" class="form-control" id="password"
-             placeholder="Enter your password">
+             placeholder="Enter your password" ng-keyup="checkPassword()">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" required="required" ng-model="passwordRepeat" class="form-control" id="repeat-password"
+             placeholder="Enter your password again" ng-keyup="checkPassword()">
+      <span ng-show="isErrorPwdRepeat" style="color: red;">Password are not equals.</span>
     </div>
     <button type="submit" class="btn btn-default" ng-click="register()"
-            ng-disabled="userForm.$invalid || isErrorMailRepeat">Register
+            ng-disabled="userForm.$invalid || isErrorMailRepeat || isErrorPwdRepeat">Register
     </button>
   </form>
 </div>

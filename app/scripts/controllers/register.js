@@ -6,9 +6,11 @@ angular.module('bookstoreWebapp')
     $scope.password = '';
     $scope.email = '';
     $scope.emailRepeat = '';
+    $scope.passwordRepeat = '';
 
     $scope.isErrorMailRepeat = false;
-    $scope.errorMailRepeat = 'E-Mails are not equals.';
+
+    $scope.isErrorPwdRepeat = false;
 
     $scope.register = function () {
 
@@ -40,6 +42,10 @@ angular.module('bookstoreWebapp')
 
     $scope.checkEmail = function () {
       $scope.isErrorMailRepeat = ($scope.emailRepeat !== $scope.email);
+    };
+
+    $scope.checkPassword = function () {
+      $scope.isErrorPwdRepeat = ($scope.passwordRepeat !== $scope.password);
     };
 
 
