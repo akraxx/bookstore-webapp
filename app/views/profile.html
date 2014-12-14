@@ -57,11 +57,12 @@
               <label for="password" class="col-sm-2 control-label">New Password</label>
               <div class="col-sm-10">
                 <input type="password" required="required" ng-model="newPassword" class="form-control" id="passwordInput"
-                       placeholder="Enter your password" ng-keyup="checkPassword()">
+                       placeholder="Enter your password" ng-keyup="checkPassword()" name="newPassword" ng-minlength="6">
+                <p ng-show="pwdForm.newPassword.$error.minlength" class="help-block" style="color: red;">Password is too short.</p>
               </div>
             </div>
             <div class="form-group">
-              <label for="password" class="col-sm-2 control-label">New Password</label>
+              <label for="password" class="col-sm-2 control-label">Repeat</label>
               <div class="col-sm-10">
                 <input type="password" required="required" ng-model="newPasswordRepeat" class="form-control" id="repeat-password"
                        placeholder="Enter your password again" ng-keyup="checkPassword()">
@@ -71,7 +72,7 @@
           </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-default" ng-disabled="pwdForm.$invalid">Update</button>
+              <button type="submit" class="btn btn-default" ng-disabled="pwdForm.$invalid || isErrorOldPwd">Update</button>
             </div>
           </div>
         </form>

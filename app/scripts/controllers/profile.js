@@ -5,6 +5,7 @@ angular.module('bookstoreWebapp')
     $scope.oldPassword = '';
     $scope.newPassword = '';
     $scope.newPasswordRepeat = '';
+    $scope.isErrorOldPwd = true;
 
     $http.get('/api/user/me')
       .success(function (me) {
