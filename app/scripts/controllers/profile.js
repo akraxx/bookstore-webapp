@@ -2,6 +2,10 @@
 
 angular.module('bookstoreWebapp')
   .controller('ProfileCtrl', function ($scope, $http, toaster) {
+    $scope.oldPassword = '';
+    $scope.newPassword = '';
+    $scope.newPasswordRepeat = '';
+
     $http.get('/api/user/me')
       .success(function (me) {
         $scope.profile = me;
@@ -38,5 +42,13 @@ angular.module('bookstoreWebapp')
           }
 
         });
+    };
+
+    $scope.checkPassword = function () {
+      $scope.isErrorPwdRepeat = ($scope.newPasswordRepeat !== $scope.newPassword);
+    };
+
+    $scope.checkOldPassword = function () {
+      $scope.isErrorOldPwd = ($scope.profile.password !== $scope.oldPassword);
     };
   });
