@@ -35,7 +35,7 @@ angular
       },
       // optional method
       'responseError': function (rejection) {
-        if (rejection.status === 401) {
+        if (rejection.status === 401 && $location.path() !== '/login') {
           toaster.pop('error', 'Error occurred', rejection.data, 5000);
 
           SessionService.logout();
