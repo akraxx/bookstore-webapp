@@ -1,7 +1,7 @@
 <div class="row marketing">
     <h4>Register page</h4>
 
-    <form role="form">
+    <form role="form" name="userForm">
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" required="required" ng-model="username" class="form-control" id="username" placeholder="Enter your username">
@@ -19,6 +19,6 @@
             <label for="password">Password</label>
             <input type="password" required="required" ng-model="password" class="form-control" id="password" placeholder="Enter your password">
         </div>
-        <button type="submit" class="btn btn-default" ng-click="register()">Register</button>
+        <button type="submit" class="btn btn-default" ng-click="register()" ng-disabled="userForm.$invalid || isErrorMailRepeat">Register</button>
     </form>
 </div>
