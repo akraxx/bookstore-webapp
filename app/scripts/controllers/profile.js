@@ -3,17 +3,17 @@
 angular.module('bookstoreWebapp')
   .controller('ProfileCtrl', function ($scope, $http, toaster) {
     $http.get('/api/user/me')
-      .success(function(me) {
+      .success(function (me) {
         $scope.profile = me;
         $scope.profile.address = {};
-        if(me.mailingAddressId) {
-          $http.get('/api/mailingAddress/'+me.mailingAddressId).success(function(myAddress) {
+        if (me.mailingAddressId) {
+          $http.get('/api/mailingAddress/' + me.mailingAddressId).success(function (myAddress) {
             $scope.profile.address = myAddress;
           });
         }
       });
 
-    $scope.updateEmail = function() {
+    $scope.updateEmail = function () {
       console.log($scope.profile);
       $http.put('/api/user/updateEmail', $scope.profile.email)
         .success(function () {
@@ -21,16 +21,16 @@ angular.module('bookstoreWebapp')
         });
     };
 
-    $scope.updateAddress = function() {
+    $scope.updateAddress = function () {
       $http.put('/api/mailingAddress', $scope.profile.address)
-        .success(function() {
+        .success(function () {
           toaster.pop('success', 'Address updated', 'Your address has been updated.', 5000, 'trustedHtml');
         })
-        .error(function(data) {
+        .error(function (data) {
 
-          if(data.errors) {
+          if (data.errors) {
             var errors = '<ul>';
-            angular.forEach(data.errors, function(value) {
+            angular.forEach(data.errors, function (value) {
               errors += '<li>' + value + '</li>';
             }, errors);
             errors += '</ul>';
@@ -39,4 +39,4 @@ angular.module('bookstoreWebapp')
 
         });
     };
-});
+  });
