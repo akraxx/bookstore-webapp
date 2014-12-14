@@ -1,0 +1,60 @@
+<div class="row marketing">
+
+    <form ng-submit="submit()" class="form-horizontal" role="form" name="userForm" novalidate>
+        <div class="well">
+            <div class="form-group">
+                <label for="inputEmail" class="col-sm-2 control-label">Login</label>
+                <div class="col-sm-10">
+                    <input type="text" name="text" class="form-control" ng-model="profile.login" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" name="email" class="form-control" id="inputEmail" ng-model="profile.email" placeholder="Email">
+                    <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="text-danger">Enter a valid email.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="well">
+            <div class="form-group">
+                <label for="inputLine1" class="col-sm-2 control-label">Line 1</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputLine1" ng-model="profile.address.line1" placeholder="Line 1">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputLine2" class="col-sm-2 control-label">Line 2</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputLine2" ng-model="profile.address.line2" placeholder="Line 2">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputZip" class="col-sm-2 control-label">Line 3</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputLine3" ng-model="profile.address.line3" placeholder="Line 3">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputCity" class="col-sm-2 control-label">City</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputCity" ng-model="profile.address.city" placeholder="City">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputZip" class="col-sm-2 control-label">Zip code</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputZip" ng-model="profile.address.zip" placeholder="Zip code">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default" ng-disabled="userForm.$invalid">Update my profile</button>
+            </div>
+        </div>
+    </form>
+
+
+</div>

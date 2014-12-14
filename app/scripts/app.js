@@ -24,7 +24,7 @@ angular
     .factory('NgTableParams', function (ngTableParams) {
         return ngTableParams;
     })
-    .factory('httpRequestInterceptor', function (SessionService) {
+    .factory('httpRequestInterceptor', function (SessionService, $q, toaster, $location) {
         var sessionInjector = {
             request: function(config) {
                 if(!SessionService.isAnonymous()) {
@@ -32,6 +32,16 @@ angular
                 }
 
                 return config;
+            },
+            // optional method
+            'responseError': function(rejection) {
+              if (rejection.status === 401) {
+                toaster.pop('error', 'Error occurred', rejection.data, 5000);
+
+                SessionService.logout();
+                $location.path('/login');
+              }
+              return $q.reject(rejection);
             }
         };
         return sessionInjector;
@@ -39,6 +49,7 @@ angular
     .service('SessionService', function($cookieStore) {
         var token = null;
         var pageAuthentificationNeeded = null;
+        var login = null;
 
         if($cookieStore.get('login')) {
             token = $cookieStore.get('login');
@@ -48,11 +59,12 @@ angular
             return !token;
         };
 
-        this.login = function(clientToken, cookie) {
+        this.login = function(clientToken, userLogin, cookie) {
             if(cookie) {
                 $cookieStore.put('login', clientToken);
             }
             token = clientToken;
+            login = userLogin;
         };
 
         this.logout = function() {
@@ -62,6 +74,10 @@ angular
 
         this.getToken = function() {
             return token;
+        };
+
+        this.getLogin = function() {
+            return login;
         };
 
         this.needAuthentification = function(page) {
@@ -126,6 +142,15 @@ angular
                 resolve: {
                     load: function (SessionService, $q, $location, toaster) {
                         SecureServiceProvider.filter(SessionService, $q, $location, toaster, '/books');
+                    }
+                }
+            })
+            .when('/profile', {
+                controller:'ProfileCtrl',
+                templateUrl:'../views/profile.html',
+                resolve: {
+                    load: function (SessionService, $q, $location, toaster) {
+                        SecureServiceProvider.filter(SessionService, $q, $location, toaster, '/profile');
                     }
                 }
             })

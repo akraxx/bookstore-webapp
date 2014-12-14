@@ -13,6 +13,8 @@ angular.module('bookstoreWebapp')
                     book.author.fullName = author.lastName + ' ' + author.firstName;
                 });
             });
+
+            $scope.tableParams.reload();
         });
 
         $scope.openDetails = function (book, size) {
@@ -67,7 +69,7 @@ angular.module('bookstoreWebapp')
             $scope.tableParams.reload();
         };
 
-        $scope.tableParams.operatorPrice = '>';
+        $scope.tableParams.operatorPrice = '';
         $scope.tableParams.limitPrice = 30;
 
     })

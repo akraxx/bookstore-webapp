@@ -10,17 +10,17 @@ angular.module('bookstoreWebapp')
                     'username='+$scope.username+'&password='+$scope.password,
                     {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
                 )
-                .success(function(data) {
+              .success(function(data) {
                     toaster.pop('success', 'Logged', 'Welcome ' + $scope.username, 5000);
-                    SessionService.login(data, true);
+                    SessionService.login(data, $scope.username, true);
 
                     if (SessionService.comeFromPrivatePage()) {
                         $location.path(SessionService.comeFromPrivatePage());
                     } else {
                         $location.path('/');
                     }
-                }).
-                error(function(data, status) {
+                })
+              .error(function(data, status) {
                     switch(status) {
                         case 401:
                             toaster.pop('error', 'Error', 'Your username/password are not correct. Please verify it and try again.', 15000);
@@ -31,5 +31,4 @@ angular.module('bookstoreWebapp')
                     }
                 });
         };
-
     });
