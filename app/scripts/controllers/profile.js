@@ -18,10 +18,16 @@ angular.module('bookstoreWebapp')
       });
 
     $scope.updateEmail = function () {
-      console.log($scope.profile);
       $http.put('/api/user/updateEmail', $scope.profile.email)
         .success(function () {
-          toaster.pop('success', 'Email has been updated', 'Your profile has been updated.', 5000, 'trustedHtml');
+          toaster.pop('success', 'Email has been updated', 'Your email has been updated.', 5000, 'trustedHtml');
+        });
+    };
+
+    $scope.updatePassword = function () {
+      $http.put('/api/user/updatePassword', $scope.newPassword)
+        .success(function () {
+          toaster.pop('success', 'Password has been updated', 'Your password has been updated.', 5000, 'trustedHtml');
         });
     };
 
