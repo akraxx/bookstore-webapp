@@ -85,11 +85,12 @@
 
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputLine1" ng-model="profile.address.line1"
+                       ng-required="true"
                        name="line1"
                        ng-minlength="4"
                        ng-maxlength="80"
                        placeholder="Line 1">
-                <p ng-show="addressForm.line1.$error.minlength" class="help-block" style="color: red;">Line 1 is too short.</p>
+                <p ng-show="addressForm.line1.$error.minlength || addressForm.line1.$error.required" class="help-block" style="color: red;">Line 1 is too short.</p>
                 <p ng-show="addressForm.line1.$error.maxlength" class="help-block" style="color: red;">Line 1 is too long.</p>
               </div>
             </div>
@@ -114,11 +115,12 @@
 
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputCity" ng-model="profile.address.city"
+                       ng-required="true"
                        name="city"
                        ng-minlength="4"
                        ng-maxlength="45"
                        placeholder="City">
-                <p ng-show="addressForm.city.$error.minlength" class="help-block" style="color: red;">City is too short.</p>
+                <p ng-show="addressForm.city.$error.minlength || addressForm.city.$error.required" class="help-block" style="color: red;">City is too short.</p>
                 <p ng-show="addressForm.city.$error.maxlength" class="help-block" style="color: red;">City is too long.</p>
               </div>
             </div>
@@ -127,11 +129,12 @@
 
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputZip" ng-model="profile.address.zip"
+                       ng-required="true"
                        name="zipCode"
                        ng-minlength="4"
                        ng-maxlength="10"
                        placeholder="Zip code">
-                <p ng-show="addressForm.zipCode.$error.minlength" class="help-block" style="color: red;">Zip code is too short.</p>
+                <p ng-show="addressForm.zipCode.$error.minlength || addressForm.zipCode.$error.required" class="help-block" style="color: red;">Zip code is too short.</p>
                 <p ng-show="addressForm.zipCode.$error.maxlength" class="help-block" style="color: red;">Zip code is too long.</p>
               </div>
             </div>
