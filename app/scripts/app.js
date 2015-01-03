@@ -154,6 +154,15 @@ angular
           }
         }
       })
+      .when('/orders', {
+        controller: 'OrdersCtrl',
+        templateUrl: '../views/orders.html',
+        resolve: {
+          load: function (SessionService, $q, $location, toaster) {
+            SecureServiceProvider.filter(SessionService, $q, $location, toaster, '/orders');
+          }
+        }
+      })
       .when('/login', {
         controller: 'AuthCtrl',
         templateUrl: '../views/login.html'

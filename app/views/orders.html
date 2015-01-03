@@ -1,0 +1,50 @@
+<div class="row marketing">
+  <h4>My orders</h4>
+
+  {{ orders }}
+  <div class="panel panel-default" ng-repeat="order in orders" style="padding: 10px;">
+    <div class="row">
+      <div class="col-lg-4">
+        <h4>Summary :</h4>
+        <div class="row">
+          <div class="col-lg-6">Total :</div>
+          <div class="col-lg-6"><b>{{ order.total | number:2 }}</b></div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">Number of books :</div>
+          <div class="col-lg-6"><b>{{ order.articles | number }}</b></div>
+        </div>
+      </div>
+      <div class="panel panel-default col-lg-5 col-lg-offset-2">
+        <h4>Shipping Address</h4>
+        <div class="row" ng-show="order.address.line1">
+          <div class="col-lg-4">Line 1 :</div>
+          <div class="col-lg-8"><b>{{ order.address.line1 }}</b></div>
+        </div>
+        <div class="row" ng-show="order.address.line2">
+          <div class="col-lg-4">Line 2 :</div>
+          <div class="col-lg-8"><b>{{ order.address.line2 }}</b></div>
+        </div>
+        <div class="row" ng-show="order.address.line3">
+          <div class="col-lg-4">Line 3 :</div>
+          <div class="col-lg-8"><b>{{ order.address.line3 }}</b></div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4">Zip Code :</div>
+          <div class="col-lg-8"><b>{{ order.address.zip }}</b></div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4">City :</div>
+          <div class="col-lg-8"><b>{{ order.address.city }}</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <h4>Details :</h4>
+
+      </div>
+    </div>
+  </div>
+
+</div>
