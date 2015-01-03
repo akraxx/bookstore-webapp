@@ -1,21 +1,24 @@
 <div class="row marketing">
   <h4>My orders</h4>
 
-  {{ orders }}
   <div class="panel panel-default" ng-repeat="order in orders" style="padding: 10px;">
     <div class="row">
-      <div class="col-lg-4">
+      <div class="col-lg-5">
         <h4>Summary :</h4>
         <div class="row">
-          <div class="col-lg-6">Total :</div>
-          <div class="col-lg-6"><b>{{ order.total | number:2 }}</b></div>
+          <div class="col-lg-5">Date :</div>
+          <div class="col-lg-7"><b>{{ order.orderDate }}</b></div>
         </div>
         <div class="row">
-          <div class="col-lg-6">Number of books :</div>
-          <div class="col-lg-6"><b>{{ order.articles | number }}</b></div>
+          <div class="col-lg-5">Total :</div>
+          <div class="col-lg-7"><b>{{ order.total | number:2 }}</b></div>
+        </div>
+        <div class="row">
+          <div class="col-lg-5">Number of books :</div>
+          <div class="col-lg-7"><b>{{ order.articles | number }}</b></div>
         </div>
       </div>
-      <div class="panel panel-default col-lg-5 col-lg-offset-2">
+      <div class="panel panel-default col-lg-5 col-lg-offset-1" style="padding: 10px;">
         <h4>Shipping Address</h4>
         <div class="row" ng-show="order.address.line1">
           <div class="col-lg-4">Line 1 :</div>
@@ -42,7 +45,32 @@
     <div class="row">
       <div class="col-lg-12">
         <h4>Details :</h4>
-
+        <table class="table table-striped">
+          <tr>
+            <th>Ref</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Unit price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
+          <tr ng-repeat="line in order.lines">
+            <td>{{ line.book.isbn13 }}</td>
+            <td>{{ line.book.title }}</td>
+            <td>{{ line.book.author.firstName + ' ' + line.book.author.lastName }}</td>
+            <td>{{ line.book.unitPrice | number:2 }}</td>
+            <td>{{ line.quantity }}</td>
+            <td>{{ line.quantity * line.book.unitPrice | number:2 }}</td>
+          </tr>
+          <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>{{ order.articles | number }}</th>
+            <th>{{ order.total | number:2 }}</th>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
