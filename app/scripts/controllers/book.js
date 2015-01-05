@@ -73,11 +73,19 @@ angular.module('bookstoreWebapp')
     $scope.tableParams.limitPrice = 30;
 
   })
-  .controller('DetailsBookCtrl', function ($scope, $modalInstance, book) {
+  .controller('DetailsBookCtrl', function ($scope, $modalInstance, book, CartService) {
     $scope.book = book;
 
     $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
+    };
+
+    $scope.addToCart = function () {
+
+      console.log(book.isbn13);
+
+      CartService.addLine(book, 1);
+      //$modalInstance.dismiss('cancel');
     };
   })
   .filter('price', function () {

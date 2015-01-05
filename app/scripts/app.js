@@ -24,6 +24,44 @@ angular
   .factory('NgTableParams', function (ngTableParams) {
     return ngTableParams;
   })
+  .run(function($rootScope) {
+    $rootScope.cart = {};
+  })
+  .service('CartService', function($rootScope) {
+    this.addLine = function(book, quantity) {
+      if(!$rootScope.cart[book.isbn13]) {
+        $rootScope.cart[book.isbn13] = {
+          quantity: 0,
+          unitPrice: book.unitPrice
+        };
+      }
+      $rootScope.cart[book.isbn13].quantity += quantity;
+    };
+
+    this.getCart = function() {
+      return $rootScope.cart;
+    };
+
+    this.totalPrice = function() {
+      var totalPrice = 0;
+
+      angular.forEach($rootScope.cart, function(book) {
+        totalPrice += parseFloat(book.unitPrice) * parseInt(book.quantity);
+      });
+
+      return totalPrice;
+    };
+
+    this.totalBooks = function() {
+      var totalBooks = 0;
+
+      angular.forEach($rootScope.cart, function(book) {
+        totalBooks += parseInt(book.quantity);
+      });
+
+      return totalBooks;
+    };
+  })
   .factory('httpRequestInterceptor', function (SessionService, $q, toaster, $location) {
     var sessionInjector = {
       request: function (config) {
@@ -90,7 +128,7 @@ angular
 
 
   })
-  .controller('PageCtrl', function ($scope, $location, $http, SessionService) {
+  .controller('PageCtrl', function ($scope, $location, $http, SessionService, CartService) {
     $scope.loggedIn = false;
 
     $scope.isActive = function (route) {
@@ -103,6 +141,14 @@ angular
 
     $scope.logout = function () {
       SessionService.logout();
+    };
+
+    $scope.cartTotalPrice = function() {
+      return CartService.totalPrice();
+    };
+
+    $scope.cartTotalBooks = function() {
+      return CartService.totalBooks();
     };
 
     $scope.$watch('$viewContentLoaded', function () {

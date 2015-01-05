@@ -30,9 +30,12 @@
 
     <ul class="nav nav-pills pull-right">
       <li ng-class="{active:isActive('/')}"><a ng-href="/#!/">Home</a></li>
-      <li ng-class="{active:isActive('/books')}"><a ng-href="/#!/books">Books</a></li>
+      <li ng-class="{active:isActive('/books')}" style="margin-right: 25px;"><a ng-href="/#!/books">Books</a></li>
       <li ng-class="{active:isActive('/login')}"><a ng-if="!loggedIn()" ng-href="/#!/login">Login</a></li>
       <li ng-class="{active:isActive('/register')}"><a ng-if="!loggedIn()" ng-href="/#!/register">Register</a></li>
+      <li ng-class="{active:isActive('/cart')}"><a ng-if="loggedIn()" ng-href="/#!/cart">
+        <span class="badge alert-danger"> {{ cartTotalBooks() }} </span> <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> {{ cartTotalPrice() | number:2 }} €</a>
+      </li>
       <li role="presentation" class="dropdown" ng-if="loggedIn()">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
           <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span class="caret"></span>
@@ -47,7 +50,6 @@
     </ul>
     <h3 class="text-muted">bookstoreWebapp</h3>
   </div>
-
   <div ng-view></div>
 
   <div class="footer">
