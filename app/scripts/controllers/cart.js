@@ -10,4 +10,8 @@ angular.module('bookstoreWebapp')
       return CartService.totalBooks();
     };
 
+    $scope.removeLine = function(line) {
+      CartService.removeLine(line);
+    };
+
   });

@@ -61,6 +61,10 @@ angular
 
       return totalBooks;
     };
+
+    this.removeLine = function(line) {
+      delete $rootScope.cart[line.book.isbn13];
+    };
   })
   .factory('httpRequestInterceptor', function (SessionService, $q, toaster, $location) {
     var sessionInjector = {
