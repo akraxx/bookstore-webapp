@@ -32,7 +32,7 @@ angular
       if(!$rootScope.cart[book.isbn13]) {
         $rootScope.cart[book.isbn13] = {
           quantity: 0,
-          unitPrice: book.unitPrice
+          book: book
         };
       }
       $rootScope.cart[book.isbn13].quantity += quantity;
@@ -45,8 +45,8 @@ angular
     this.totalPrice = function() {
       var totalPrice = 0;
 
-      angular.forEach($rootScope.cart, function(book) {
-        totalPrice += parseFloat(book.unitPrice) * parseInt(book.quantity);
+      angular.forEach($rootScope.cart, function(line) {
+        totalPrice += parseFloat(line.book.unitPrice) * parseInt(line.book.quantity);
       });
 
       return totalPrice;
