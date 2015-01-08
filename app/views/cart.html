@@ -16,7 +16,7 @@
       <td>{{ line.book.author.firstName + ' ' + line.book.author.lastName }}</td>
       <td>{{ line.book.unitPrice | number:2 }}</td>
       <td>{{ line.quantity }}</td>
-      <td>{{ line.quantity * line.book.unitPrice | number:2 }}</td>
+      <td>{{ line.quantity * line.book.unitPrice | number:2 }} €</td>
     </tr>
     <tr>
       <th></th>
@@ -24,7 +24,7 @@
       <th></th>
       <th></th>
       <th>{{ cartTotalBooks() | number }}</th>
-      <th>{{ cartTotalPrice() | number:2 }}</th>
+      <th>{{ cartTotalPrice() | number:2 }} €</th>
     </tr>
   </table>
 
