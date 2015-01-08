@@ -32,20 +32,54 @@
   </table>
 
   <div class="col-lg-12 text-center">
-    <button class="btn btn-primary" ng-click="processOrder()" >Process my order</button>
+    <button class="btn btn-primary" ng-click="processOrder(cartTotalPrice())" >Process my order</button>
   </div>
 
   <script type="text/ng-template" id="modalProcessOrder.html">
-    <form ng-submit="updateAddress()" class="form-horizontal" role="form" name="addressForm" novalidate>
+    <form ng-submit="processOrder()" class="form-horizontal" role="form" name="addressForm" novalidate>
       <div class="modal-header">
         <h3 class="modal-title">Process my order</h3>
       </div>
       <div class="modal-body">
         <div class="row">
-          <div class="col-lg-4">
-
+          <div class="col-lg-6">
+            <h4>Summary</h4>
+            <div class="row">
+              <div class="col-lg-12">
+                Login : <b>{{ profile.login }}</b>
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-lg-12">
+                <table class="table table-striped">
+                  <tr>
+                    <th>Title</th>
+                    <th>Qt</th>
+                    <th>Total</th>
+                    <th></th>
+                  </tr>
+                  <tr ng-repeat="line in cart">
+                    <td>
+                      [ {{ line.book.isbn13 }} ] <br />
+                      <b>{{ line.book.title }}</b> <br />
+                      by {{ line.book.author.firstName + ' ' + line.book.author.lastName }}
+                    </td>
+                    <td>
+                      {{ line.quantity }}
+                    </td>
+                    <td>
+                      <h4>{{ line.quantity * line.book.unitPrice | number:2 }}€</h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th colspan="3" class="text-right"><h2>Total : {{ totalPrice | number:2 }} €</h2></th>
+                  </tr>
+                </table>
+              </div>
+            </div>
           </div>
-          <div class="col-lg-8">
+          <div class="col-lg-6">
             <h4>Shipping Address</h4>
             <div class="row">
               <div class="col-lg-12">
@@ -53,8 +87,8 @@
                 <div>
                   <div class="well">
                     <div class="form-group">
-                      <label for="inputLine1" class="col-sm-2 control-label">Line 1</label>
-                      <div class="col-sm-10">
+                      <label for="inputLine1" class="col-sm-4 control-label">Line 1</label>
+                      <div class="col-sm-8">
                         <input type="text" class="form-control" id="inputLine1" ng-model="profile.address.line1"
                                ng-required="true"
                                name="line1"
@@ -66,25 +100,25 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="inputLine2" class="col-sm-2 control-label">Line 2</label>
+                      <label for="inputLine2" class="col-sm-4 control-label">Line 2</label>
 
-                      <div class="col-sm-10">
+                      <div class="col-sm-8">
                         <input type="text" class="form-control" id="inputLine2" ng-model="profile.address.line2"
                                placeholder="Line 2">
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="inputZip" class="col-sm-2 control-label">Line 3</label>
+                      <label for="inputZip" class="col-sm-4 control-label">Line 3</label>
 
-                      <div class="col-sm-10">
+                      <div class="col-sm-8">
                         <input type="text" class="form-control" id="inputLine3" ng-model="profile.address.line3"
                                placeholder="Line 3">
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="inputCity" class="col-sm-2 control-label">City</label>
+                      <label for="inputCity" class="col-sm-4 control-label">City</label>
 
-                      <div class="col-sm-10">
+                      <div class="col-sm-8">
                         <input type="text" class="form-control" id="inputCity" ng-model="profile.address.city"
                                ng-required="true"
                                name="city"
@@ -96,9 +130,9 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="inputZip" class="col-sm-2 control-label">Zip code</label>
+                      <label for="inputZip" class="col-sm-4 control-label">Zip code</label>
 
-                      <div class="col-sm-10">
+                      <div class="col-sm-8">
                         <input type="text" class="form-control" id="inputZip" ng-model="profile.address.zip"
                                ng-required="true"
                                name="zipCode"

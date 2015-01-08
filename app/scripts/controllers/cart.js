@@ -16,12 +16,15 @@ angular.module('bookstoreWebapp')
       CartService.removeLine(line);
     };
 
-    $scope.processOrder = function () {
+    $scope.processOrder = function (totalPrice) {
       $modal.open({
         templateUrl: 'modalProcessOrder.html',
         controller: 'ProcessOrderCtrl',
         size: 'lg',
         resolve: {
+          totalPrice: function () {
+            return totalPrice;
+          }
         }
       });
     };
@@ -29,7 +32,8 @@ angular.module('bookstoreWebapp')
 
 
   })
-  .controller('ProcessOrderCtrl', function ($scope, $modalInstance, $http) {
+  .controller('ProcessOrderCtrl', function ($scope, $rootScope, $modalInstance, $http, totalPrice) {
+    $scope.totalPrice = totalPrice;
     $scope.savedProfileAddress = {};
 
     $http.get('/api/user/me')
@@ -56,5 +60,5 @@ angular.module('bookstoreWebapp')
       } else {
         $scope.profile.address = {};
       }
-    }
+    };
   });
