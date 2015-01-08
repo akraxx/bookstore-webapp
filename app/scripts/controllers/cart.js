@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('bookstoreWebapp')
-  .controller('CartCtrl', function ($scope, $rootScope, $http, CartService) {
+  .controller('CartCtrl', function ($scope, $rootScope, $http, CartService, $modal) {
+
+
     $scope.cartTotalPrice = function() {
       return CartService.totalPrice();
     };
@@ -14,4 +16,45 @@ angular.module('bookstoreWebapp')
       CartService.removeLine(line);
     };
 
+    $scope.processOrder = function () {
+      $modal.open({
+        templateUrl: 'modalProcessOrder.html',
+        controller: 'ProcessOrderCtrl',
+        size: 'lg',
+        resolve: {
+        }
+      });
+    };
+
+
+
+  })
+  .controller('ProcessOrderCtrl', function ($scope, $modalInstance, $http) {
+    $scope.savedProfileAddress = {};
+
+    $http.get('/api/user/me')
+      .success(function (me) {
+        $scope.profile = me;
+        $scope.profile.address = {};
+        if (me.mailingAddressId) {
+          $http.get('/api/mailingAddress/' + me.mailingAddressId).success(function (myAddress) {
+            $scope.profile.address = myAddress;
+            angular.copy($scope.profile.address, $scope.savedProfileAddress);
+          });
+        }
+      });
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+
+    $scope.useProfileAddress = function(useProfile) {
+      if(useProfile) {
+        var tempAddress = {};
+        angular.copy($scope.savedProfileAddress, tempAddress);
+        $scope.profile.address = tempAddress;
+      } else {
+        $scope.profile.address = {};
+      }
+    }
   });
