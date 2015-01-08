@@ -80,12 +80,9 @@ angular.module('bookstoreWebapp')
       $modalInstance.dismiss('cancel');
     };
 
-    $scope.addToCart = function () {
-
-      console.log(book.isbn13);
-
-      CartService.addLine(book, 1);
-      //$modalInstance.dismiss('cancel');
+    $scope.addToCart = function (quantity) {
+      CartService.addLine(book, quantity);
+      $modalInstance.dismiss('cancel');
     };
   })
   .filter('price', function () {

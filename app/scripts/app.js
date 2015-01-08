@@ -29,12 +29,14 @@ angular
   })
   .service('CartService', function($rootScope) {
     this.addLine = function(book, quantity) {
+
       if(!$rootScope.cart[book.isbn13]) {
         $rootScope.cart[book.isbn13] = {
           quantity: 0,
           book: book
         };
       }
+
       $rootScope.cart[book.isbn13].quantity += quantity;
     };
 
