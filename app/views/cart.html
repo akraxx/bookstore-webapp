@@ -1,0 +1,31 @@
+<div class="row marketing">
+  <h4>My cart</h4>
+
+  <table class="table table-striped">
+    <tr>
+      <th>ISBN13</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Unit price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+    </tr>
+    <tr ng-repeat="line in cart">
+      <td>{{ line.book.isbn13 }}</td>
+      <td>{{ line.book.title }}</td>
+      <td>{{ line.book.author.firstName + ' ' + line.book.author.lastName }}</td>
+      <td>{{ line.book.unitPrice | number:2 }}</td>
+      <td>{{ line.quantity }}</td>
+      <td>{{ line.quantity * line.book.unitPrice | number:2 }}</td>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>{{ cartTotalBooks() | number }}</th>
+      <th>{{ cartTotalPrice() | number:2 }}</th>
+    </tr>
+  </table>
+
+</div>

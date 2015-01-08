@@ -46,7 +46,7 @@ angular
       var totalPrice = 0;
 
       angular.forEach($rootScope.cart, function(line) {
-        totalPrice += parseFloat(line.book.unitPrice) * parseInt(line.book.quantity);
+        totalPrice += parseFloat(line.book.unitPrice) * parseInt(line.quantity);
       });
 
       return totalPrice;
@@ -55,8 +55,8 @@ angular
     this.totalBooks = function() {
       var totalBooks = 0;
 
-      angular.forEach($rootScope.cart, function(book) {
-        totalBooks += parseInt(book.quantity);
+      angular.forEach($rootScope.cart, function(line) {
+        totalBooks += parseInt(line.quantity);
       });
 
       return totalBooks;
@@ -206,6 +206,15 @@ angular
         resolve: {
           load: function (SessionService, $q, $location, toaster) {
             SecureServiceProvider.filter(SessionService, $q, $location, toaster, '/orders');
+          }
+        }
+      })
+      .when('/cart', {
+        controller: 'CartCtrl',
+        templateUrl: '../views/cart.html',
+        resolve: {
+          load: function (SessionService, $q, $location, toaster) {
+            SecureServiceProvider.filter(SessionService, $q, $location, toaster, '/cart');
           }
         }
       })
