@@ -42,6 +42,7 @@ angular.module('bookstoreWebapp')
         $scope.profile.address = {};
         if (me.mailingAddressId) {
           $http.get('/api/mailingAddress/' + me.mailingAddressId).success(function (myAddress) {
+            myAddress.id = 0;
             $scope.profile.address = myAddress;
             angular.copy($scope.profile.address, $scope.savedProfileAddress);
           });
@@ -60,5 +61,19 @@ angular.module('bookstoreWebapp')
       } else {
         $scope.profile.address = {};
       }
+    };
+
+    $scope.processOrder = function() {
+      $http.post('/api/order',
+        {
+          address: $scope.profile.address,
+          orderLines: []
+        })
+        .success(function (order) {
+          console.log(order);
+        })
+        .error(function() {
+
+        });
     };
   });
