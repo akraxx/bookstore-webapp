@@ -17,6 +17,7 @@ angular
     'ngRoute',
     'ngResource',
     'ngTable',
+    'ngStorage',
     'ui.bootstrap',
     'toaster'
   ])
@@ -24,30 +25,32 @@ angular
   .factory('NgTableParams', function (ngTableParams) {
     return ngTableParams;
   })
-  .run(function($rootScope) {
-    $rootScope.cart = {};
+  .run(function($localStorage) {
+    if($localStorage.cart === undefined) {
+      $localStorage.cart = {};
+    }
   })
-  .service('CartService', function($rootScope) {
+  .service('CartService', function($localStorage) {
     this.addLine = function(book, quantity) {
 
-      if(!$rootScope.cart[book.isbn13]) {
-        $rootScope.cart[book.isbn13] = {
+      if(!$localStorage.cart[book.isbn13]) {
+        $localStorage.cart[book.isbn13] = {
           quantity: 0,
           book: book
         };
       }
 
-      $rootScope.cart[book.isbn13].quantity += quantity;
+      $localStorage.cart[book.isbn13].quantity += quantity;
     };
 
     this.getCart = function() {
-      return $rootScope.cart;
+      return $localStorage.cart;
     };
 
     this.totalPrice = function() {
       var totalPrice = 0;
 
-      angular.forEach($rootScope.cart, function(line) {
+      angular.forEach($localStorage.cart, function(line) {
         totalPrice += parseFloat(line.book.unitPrice) * parseInt(line.quantity);
       });
 
@@ -57,7 +60,7 @@ angular
     this.totalBooks = function() {
       var totalBooks = 0;
 
-      angular.forEach($rootScope.cart, function(line) {
+      angular.forEach($localStorage.cart, function(line) {
         totalBooks += parseInt(line.quantity);
       });
 
@@ -65,7 +68,7 @@ angular
     };
 
     this.removeLine = function(line) {
-      delete $rootScope.cart[line.book.isbn13];
+      delete $localStorage.cart[line.book.isbn13];
     };
   })
   .factory('httpRequestInterceptor', function (SessionService, $q, toaster, $location) {

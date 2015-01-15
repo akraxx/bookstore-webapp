@@ -11,7 +11,7 @@
         </div>
         <div class="row">
           <div class="col-lg-5">Total :</div>
-          <div class="col-lg-7"><b>{{ order.total | number:2 }}</b></div>
+          <div class="col-lg-7"><b>{{ order.total | number:2 }}€</b></div>
         </div>
         <div class="row">
           <div class="col-lg-5">Number of books :</div>
@@ -58,7 +58,7 @@
             <td>{{ line.book.isbn13 }}</td>
             <td>{{ line.book.title }}</td>
             <td>{{ line.book.author.firstName + ' ' + line.book.author.lastName }}</td>
-            <td>{{ line.book.unitPrice | number:2 }}</td>
+            <td>{{ line.book.unitPrice | number:2 }}€</td>
             <td>{{ line.quantity }}</td>
             <td>{{ line.quantity * line.book.unitPrice | number:2 }} €</td>
           </tr>
@@ -68,7 +68,7 @@
             <th></th>
             <th></th>
             <th>{{ order.articles | number }}</th>
-            <th>{{ order.total | number:2 }} €</th>
+            <th>{{ order.total | number:2 }}€</th>
           </tr>
         </table>
       </div>

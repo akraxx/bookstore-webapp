@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('bookstoreWebapp')
-  .controller('CartCtrl', function ($scope, $rootScope, $http, CartService, $modal) {
+  .controller('CartCtrl', function ($scope, $localStorage, $http, CartService, $modal) {
 
+    $scope.cart = $localStorage.cart;
 
     $scope.cartTotalPrice = function() {
       return CartService.totalPrice();
@@ -32,7 +33,7 @@ angular.module('bookstoreWebapp')
 
 
   })
-  .controller('ProcessOrderCtrl', function ($scope, $rootScope, $modalInstance, $http, totalPrice) {
+  .controller('ProcessOrderCtrl', function ($scope, $localStorage, $modalInstance, $http, totalPrice, toaster, $location) {
     $scope.totalPrice = totalPrice;
     $scope.savedProfileAddress = {};
 
@@ -64,15 +65,36 @@ angular.module('bookstoreWebapp')
     };
 
     $scope.processOrder = function() {
+      var orderLines = [];
+      angular.forEach($localStorage.cart, function(line) {
+        orderLines.push({
+          bookIsbn13: line.book.isbn13,
+          quantity: line.quantity
+        });
+      });
+
+
       $http.post('/api/order',
         {
           address: $scope.profile.address,
-          orderLines: []
+          orderLines: orderLines
         })
-        .success(function (order) {
-          console.log(order);
+        .success(function () {
+          toaster.pop('success', 'Success', 'Order has been successfully processed.', 5000, 'trustedHtml');
+          $localStorage.cart = {};
+          $modalInstance.dismiss('cancel');
+          $location.path('/orders');
         })
-        .error(function() {
+        .error(function (data) {
+
+          if (data.errors) {
+            var errors = '<ul>';
+            angular.forEach(data.errors, function (value) {
+              errors += '<li>' + value + '</li>';
+            }, errors);
+            errors += '</ul>';
+            toaster.pop('error', 'Error', 'Error(s) occurred during the order process : ' + errors, 0, 'trustedHtml');
+          }
 
         });
     };

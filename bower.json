@@ -13,6 +13,7 @@
     "angular-route": "~1.3.0",
     "angular-resource": "~1.3.0",
     "ng-table": "~0.3.3",
+    "ngstorage": "~0.3.0",
     "angular-bootstrap": "~0.11.2",
     "angularjs-toaster": "~0.4.8"
   },
