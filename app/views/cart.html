@@ -32,7 +32,7 @@
   </table>
 
   <div class="col-lg-12 text-center">
-    <button class="btn btn-primary" ng-click="processOrder(cartTotalPrice())" >Process my order</button>
+    <button class="btn btn-primary" ng-click="processOrder(cartTotalPrice())" ng-if="cartTotalBooks() > 0" >Process my order</button>
   </div>
 
   <script type="text/ng-template" id="modalProcessOrder.html">
