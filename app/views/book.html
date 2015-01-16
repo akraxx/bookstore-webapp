@@ -1,6 +1,56 @@
 <div class="row marketing">
   <h4>Books</h4>
 
+  <div class="text-right">
+    <h5><button class="btn btn-primary" ng-click="showAdvanced =! showAdvanced">
+      <span ng-show="!showAdvanced">Show</span><span ng-show="showAdvanced">Hide</span> Advanced Search</button>
+    </h5>
+    <div ng-show="showAdvanced" class="well text-left">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <span ng-show="!isAnyUserCriterias()">No criterions have been added yet.</span>
+              <div class="row" ng-repeat="(type, value) in userCriterias">
+                <div class="col-lg-12">
+                  <a ng-href="" ng-click="removeCriteria(type)"><span class="glyphicon glyphicon-remove"></span> </a>
+                  {{ criterias[type] }} : <b>{{ value }}</b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <form class="form-horizontal" ng-submit="addCriteria(criteriaType, criteriaValue)" name="criteriaForm" novalidate>
+            <div class="col-lg-4">
+              <select
+                ng-options="id as value for (id, value) in criterias"
+                name="criteriaField"
+                class="form-control"
+                ng-model="criteriaType"
+                ng-required="true"/>
+              <p ng-show="criteriaForm.criteriaField.$error.required" class="help-block" style="color: red;">Type is required.</p>
+            </div>
+            <div class="col-lg-5">
+              <input type="text"
+                     class="form-control"
+                     name="criteriaValue"
+                     ng-required="true"
+                     ng-minlength="3"
+                     ng-maxlength="80"
+                     ng-model="criteriaValue"
+                     placeholder="Your criteria...">
+              <p ng-show="criteriaForm.criteriaValue.$error.minlength || criteriaForm.criteriaValue.$error.required" class="help-block" style="color: red;">Criteria is too short.</p>
+              <p ng-show="criteriaForm.criteriaValue.$error.maxlength" class="help-block" style="color: red;">Criteria is too long.</p>
+            </div>
+            <div class="col-lg-2">
+              <button class="btn btn-primary" type="submit" ng-disabled="criteriaForm.$invalid">Add criterion</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   <table ng-table="tableParams" show-filter="true" class="table">
     <tr ng-repeat="book in books">
       <td data-title="'ISBN13'" filter="{ 'isbn13': 'text' }" sortable="'isbn13'">

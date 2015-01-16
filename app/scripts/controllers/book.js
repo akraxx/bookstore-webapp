@@ -1,11 +1,14 @@
 'use strict';
 
 angular.module('bookstoreWebapp')
-  .controller('BookCtrl', function ($scope, BookFactory, AuthorFactory, NgTableParams, $filter, $modal) {
+  .controller('BookCtrl', function ($scope, BookFactory, AuthorFactory, NgTableParams, $filter, $modal, $http) {
 
     var books = BookFactory.query();
 
-    books.$promise.then(function (books) {
+    $scope.criterias = {};
+    $scope.userCriterias = {};
+
+    $scope.processNewBooks = function(books) {
       angular.forEach(books, function (book) {
         book.author = AuthorFactory.get({authorId: book.authorId});
 
@@ -15,6 +18,10 @@ angular.module('bookstoreWebapp')
       });
 
       $scope.tableParams.reload();
+    };
+
+    books.$promise.then(function (books) {
+      $scope.processNewBooks(books);
     });
 
     $scope.openDetails = function (book, size) {
@@ -28,6 +35,39 @@ angular.module('bookstoreWebapp')
           }
         }
       });
+    };
+
+    $scope.addCriteria = function(type, value) {
+      $scope.userCriterias[type] = value;
+
+      $scope.searchCriteria();
+    };
+
+    $scope.removeCriteria = function(type) {
+      delete $scope.userCriterias[type];
+
+      $scope.searchCriteria();
+    };
+
+    $scope.searchCriteria = function() {
+      $http.post('/api/book/byCriterias', $scope.userCriterias)
+        .success(function(books) {
+          $scope.processNewBooks(books);
+          $scope.books = books;
+        })
+        .error(function() {
+
+        });
+
+    };
+
+    $http.get('/api/book/criterias')
+      .success(function (data) {
+        $scope.criterias = data;
+      });
+
+    $scope.isAnyUserCriterias = function() {
+      return !angular.equals({}, $scope.userCriterias);
     };
 
     $scope.tableParams = new NgTableParams({
