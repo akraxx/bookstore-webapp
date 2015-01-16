@@ -93,7 +93,7 @@ angular
     };
     return sessionInjector;
   })
-  .service('SessionService', function ($cookieStore) {
+  .service('SessionService', function ($cookieStore, $localStorage) {
     var token = null;
     var pageAuthentificationNeeded = null;
     var login = null;
@@ -116,6 +116,7 @@ angular
 
     this.logout = function () {
       $cookieStore.put('login', null);
+      $localStorage.cart = {};
       token = null;
     };
 
