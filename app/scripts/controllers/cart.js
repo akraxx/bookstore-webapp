@@ -35,6 +35,7 @@ angular.module('bookstoreWebapp')
   })
   .controller('ProcessOrderCtrl', function ($scope, $localStorage, $modalInstance, $http, totalPrice, toaster, $location) {
     $scope.totalPrice = totalPrice;
+    $scope.cart = $localStorage.cart;
     $scope.savedProfileAddress = {};
 
     $http.get('/api/user/me')

@@ -16,7 +16,7 @@
       <td>{{ line.book.title }}</td>
       <td>{{ line.book.author.firstName + ' ' + line.book.author.lastName }}</td>
       <td>{{ line.book.unitPrice | number:2 }}</td>
-      <td>{{ line.quantity }}</td>
+      <td><input class="form-control" min="1" type="number" ng-model="line.quantity" /></td>
       <td>{{ line.quantity * line.book.unitPrice | number:2 }} €</td>
       <td><a ng-click="removeLine(line)"><span class="glyphicon glyphicon-remove"></span> </a> </td>
     </tr>
