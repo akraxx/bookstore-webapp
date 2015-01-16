@@ -72,7 +72,7 @@ angular.module('bookstoreWebapp')
 
     $scope.tableParams = new NgTableParams({
       page: 1,            // show first page
-      count: 5,          // count per page
+      count: 10,          // count per page
       filterDelay: 0,
       filter: {
         isbn13: ''
